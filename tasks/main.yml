@@ -10,6 +10,7 @@
 
 
 - name: Configure globals for swiftbackmeup
+  no_log: True
   swiftbackmeup_global: name={{ item.key }}
                         value={{ item.value.value }}
                         config={{ item.value.config | default('/etc/swiftbackmeup.conf') }}
@@ -18,6 +19,7 @@
 
 
 - name: Configure modes for swiftbackmeup
+  no_log: True
   swiftbackmeup_mode: name={{ item.key }}
                       retention={{ item.value.retention | default(None) }}
                       pattern={{ item.value.pattern | default(None) }}
@@ -28,6 +30,7 @@
 
 
 - name: Configure Git items for backups
+  no_log: True
   swiftbackmeup_git: name={{ item.key }}
                      os_username={{ item.value.os_username | default(None) }}
                      os_password={{ item.value.os_password | default(None) }}
@@ -53,6 +56,7 @@
 
 
 - name: Configure File items for backups
+  no_log: True
   swiftbackmeup_file: name={{ item.key }}
                       os_username={{ item.value.os_username | default(None) }}
                       os_password={{ item.value.os_password | default(None) }}
@@ -76,6 +80,7 @@
   with_dict: '{{ swiftbackmeup_files }}'
 
 - name: Configure PostgreSQL items for backups
+  no_log: True
   swiftbackmeup_postgresql: name={{ item.key }}
                             os_username={{ item.value.os_username | default(None) }}
                             os_password={{ item.value.os_password | default(None) }}
@@ -109,6 +114,7 @@
   with_dict: '{{ swiftbackmeup_postgresqls }}'
 
 - name: Configure MariaDB items for backups
+  no_log: True
   swiftbackmeup_mariadb: name={{ item.key }}
                          os_username={{ item.value.os_username | default(None) }}
                          os_password={{ item.value.os_password | default(None) }}
