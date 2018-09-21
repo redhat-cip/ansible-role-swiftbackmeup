@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#coding: utf-8 -*-
+# coding: utf-8 -*-
 # Copyright 2016 Yanis Guenane <yguenane@redhat.com>
 # Author: Yanis Guenane <yguenane@redhat.com>
 #
@@ -78,6 +78,7 @@ value:
   sample: True
 '''
 
+
 class Item(object):
 
     def __init__(self, module):
@@ -120,7 +121,6 @@ class Item(object):
         self.schema_only = module.params['schema_only']
         self.tablespaces_only = module.params['tablespaces_only']
 
-
     def write(self):
         l_backup = {}
         for prop in _PROPERTIES:
@@ -145,14 +145,13 @@ class Item(object):
         except KeyError:
             pass
 
-        if c_backup == l_backup: 
+        if c_backup == l_backup:
             self.changed = False
         else:
             backups.append(l_backup)
             swiftbackmeup_conf['backups'] = backups
             with open(self.config, 'w') as conf_file:
                 conf_file.write(yaml.dump(swiftbackmeup_conf))
-
 
     def remove(self):
         try:
@@ -165,8 +164,9 @@ class Item(object):
 
         backups = None
         if 'backups' in swiftbackmeup_conf:
-            backups = [backup for backup in swiftbackmeup_conf['backups'] if backup['name'] != self.name]
-       
+            backups = [backup for backup in swiftbackmeup_conf[
+                'backups'] if backup['name'] != self.name]
+
         if 'backups' not in swiftbackmeup_conf or backups == swiftbackmeup_conf['backups']:
             self.changed = False
         else:
@@ -174,15 +174,15 @@ class Item(object):
             with open(self.config, 'w') as conf_file:
                 conf_file.write(yaml.dump(swiftbackmeup_conf))
 
-
     def dump(self):
-    
+
         result = {
-          'name': self.name,
-          'changed': self.changed,
+            'name': self.name,
+            'changed': self.changed,
         }
 
         return result
+
 
 def main():
     module = AnsibleModule(
@@ -191,11 +191,11 @@ def main():
             config=dict(required=False, type='path', default='/etc/swiftbackmeup.conf'),
             name=dict(type='str'),
 
-            os_username=dict(required=False, type='str'),
-            os_password=dict(required=False, type='str'),
-            os_tenant_name=dict(required=False, type='str'),
-            os_region_name=dict(required=False, type='str'),
-            os_auth_url=dict(required=False, type='str'),
+            os_username=dict(required=False, type='str', no_log=True),
+            os_password=dict(required=False, type='str', no_log=True),
+            os_region_name=dict(required=False, type='str', no_log=True),
+            os_tenant_name=dict(required=False, type='str', no_log=True),
+            os_auth_url=dict(required=False, type='str', no_log=True),
             store_type=dict(required=False, type='str'),
             create_container=dict(required=False, type='str'),
             purge_container=dict(required=False, type='str'),
@@ -234,7 +234,8 @@ def main():
     base_dir = os.path.dirname(module.params['config'])
 
     if not os.path.isdir(base_dir):
-        module.fail_json(name=base_dir, msg='The directory %s does not exist or the file is not a directory' % base_dir)
+        module.fail_json(
+            name=base_dir, msg='The directory %s does not exist or the file is not a directory' % base_dir)
 
     item = Item(module)
 
@@ -243,7 +244,7 @@ def main():
     else:
         item.remove()
 
-    result =item.dump()
+    result = item.dump()
     module.exit_json(**result)
 
 
