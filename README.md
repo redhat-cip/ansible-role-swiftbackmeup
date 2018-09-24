@@ -9,7 +9,7 @@ No special requirements; note that this role requires root access, so either run
 
     - hosts: database
       roles:
-        - role: Spredzy.swiftbackmeup
+        - role: redhat-cip.swiftbackmeup
           become: yes
 
 ## Role Variables
@@ -36,7 +36,7 @@ None.
       vars_files:
         - vars/main.yml
       roles:
-        - { role: Spredzy.swiftbackmeup }
+        - { role: redhat-cip.swiftbackmeup }
 
 *Inside `vars/main.yml`*:
 

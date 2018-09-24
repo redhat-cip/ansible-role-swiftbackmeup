@@ -2,6 +2,7 @@
 dependencies: []
 
 galaxy_info:
+  role_name: swiftbackmeup
   author: Spredzy
   description: An Ansible module for Swiftbackmeup
   company: "Red Hat"
